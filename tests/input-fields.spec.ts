@@ -5,10 +5,31 @@ test.beforeEach( async({page}) => {
 })
 
 test('Update pet type', async ({page}) => {
-    await page.locator('li').getByRole('link', {name: 'Pet Types'}).click()
+    await page.getByRole('link', { name: 'Pet Types' }).click()
+    await page.waitForLoadState('networkidle')
     const petTypeTitle = await page.locator('app-pettype-list', {hasText: 'Pet Types'}).getByRole('heading', {name: 'Pet Type'}).textContent()
     expect(petTypeTitle).toEqual('Pet Types')
-});
+    await page.locator('table').getByRole('row', {name: 'cat'})
+      .getByRole('button', { name: 'Edit' }).click()
+    await expect(page.locator('h2')).toHaveText('Edit Pet Type')
+    const petInput = page.locator('app-pettype-edit input[name="name"]')
+    await petInput.click()
+    await petInput.clear()
+    await petInput.pressSequentially('rabbit')
+    await page.locator('button', {hasText: 'Update'}).click()
+    await page.waitForLoadState('networkidle')
+    let newInputValue = await page.locator('app-pettype-list input').first().inputValue()
+    expect(newInputValue).toEqual('rabbit')
+    await page.locator('table').getByRole('row', {name: 'rabbit'})
+      .getByRole('button', { name: 'Edit' }).click()
+    await petInput.click()
+    await petInput.clear()
+    await petInput.pressSequentially('cat')
+    await page.locator('button', {hasText: 'Update'}).click()
+    await page.waitForLoadState('networkidle')
+    newInputValue = await page.locator('app-pettype-list input').first().inputValue()
+    expect(newInputValue).toEqual('cat')
+})
 
 // test('', async ({page}) => {
   
