@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach( async({page}) => {
   await page.goto('/')
+  await page.getByRole('link', { name: 'Pet Types' }).click()
+  await page.waitForLoadState('networkidle')
+  let petTypeTitle = await page.getByRole('heading', {name: 'Pet Type'}).textContent()
+  expect(petTypeTitle).toEqual('Pet Types')
 })
 
 test.describe('Input fields', () => {
     test('Update pet type', async ({page}) => {
-        await page.getByRole('link', { name: 'Pet Types' }).click()
-        await page.waitForLoadState('networkidle')
-        const petTypeTitle = await page.getByRole('heading', {name: 'Pet Type'}).textContent()
-        expect(petTypeTitle).toEqual('Pet Types')
         await page.locator('table').getByRole('row', {name: 'cat'})
             .getByRole('button', { name: 'Edit' }).click()
         await expect(page.locator('h2')).toHaveText('Edit Pet Type')
@@ -34,10 +34,6 @@ test.describe('Input fields', () => {
     })
     
     test('Cancel pet type update', async ({page}) => {
-        await page.getByRole('link', { name: 'Pet Types' }).click()
-        await page.waitForLoadState('networkidle')
-        const petTypeTitle = await page.getByRole('heading', {name: 'Pet Type'}).textContent()
-        expect(petTypeTitle).toEqual('Pet Types')
         await page.locator('table').getByRole('row', {name: 'dog'})
             .getByRole('button', { name: 'Edit' }).click()
         let petInputEdition = page.locator('app-pettype-edit input[name="name"]')
@@ -51,10 +47,6 @@ test.describe('Input fields', () => {
     })
 
     test('Validation of Pet type name is required', async ({page}) => {
-        await page.getByRole('link', { name: 'Pet Types' }).click()
-        await page.waitForLoadState('networkidle')
-        let petTypeTitle = await page.getByRole('heading', {name: 'Pet Type'}).textContent()
-        expect(petTypeTitle).toEqual('Pet Types')
         await page.locator('table').getByRole('row', {name: 'lizard'})
             .getByRole('button', { name: 'Edit' }).click()
         let petInputEdition = page.locator('app-pettype-edit input[name="name"]')
@@ -67,6 +59,7 @@ test.describe('Input fields', () => {
         expect(editPetTypeTitle).toEqual('Edit Pet Type')
         await page.locator('button', {hasText: 'Cancel'}).click()
         await page.waitForLoadState('networkidle')
+        const petTypeTitle = await page.locator('h2', {hasText: 'Pet Types'}).textContent()
         expect(petTypeTitle).toEqual('Pet Types')
     })
 })
