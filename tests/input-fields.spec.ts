@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach( async({page}) => {
+test.beforeEach(async ({page}) => {
   await page.goto('/')
   await page.getByRole('link', {name: "Pet Types"}).click()
   await expect(page.getByRole('heading')).toHaveText('Pet Types')
