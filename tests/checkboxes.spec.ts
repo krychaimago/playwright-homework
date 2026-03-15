@@ -29,9 +29,9 @@ test.describe('Checkboxes', () => {
         await expect(specialtiesDropdown).toHaveText('surgery')
         await specialtiesDropdown.click()
         const allCheckboxes = page.getByRole('checkbox')
-        for(const checkboxbox of await allCheckboxes.all()) {
-            await checkboxbox.check()
-            await expect(checkboxbox).toBeChecked()
+        for(const checkbox of await allCheckboxes.all()) {
+            await checkbox.check()
+            await expect(checkbox).toBeChecked()
         }
         await expect(specialtiesDropdown).toHaveText('surgery, radiology, dentistry')
     })
