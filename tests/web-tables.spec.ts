@@ -26,7 +26,6 @@ test('Validate search by Last Name', async ({ page }) => {
     const lastNames = ["Black", "Davis", "Es", "Playwright"]
 
     for (let lastName of lastNames) {
-        console.log('Searching for last name: ' + lastName)
         await page.locator('#lastName').fill(lastName)
         await page.getByRole('button', { name: 'Find Owner' }).click()
         await page.waitForResponse('**/api/owners?lastName=' + lastName)
