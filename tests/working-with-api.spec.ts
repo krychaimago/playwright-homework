@@ -8,10 +8,8 @@ test.beforeEach(async ({ page }) => {
         })
     })
     await page.route('**/api/owners/*', async route => {
-        const ownerId = Number(route.request().url().split('/').pop())
-        const owner = owners.find((item) => item.id === ownerId)
         await route.fulfill({
-            json: owner
+            json: owners[0]
         })
     })
     await page.goto('/')
@@ -22,6 +20,7 @@ test('mocking API request', async ({ page }) => {
     await page.getByRole('link', { name: 'SEARCH' }).click()
     await expect(page.locator('#ownersTable > table > tbody > tr')).toHaveCount(owners.length)
     await page.getByRole('link', { name: 'Przemek Kowalski' }).click()
+    await expect(page).toHaveURL('/owners/2211')
     await expect(page.getByRole('table').first().getByRole('row', { name: 'Name' }).getByRole('cell')).toHaveText('Przemek Kowalski')
     await expect(page.getByRole('table').first().getByRole('row', { name: 'Address' }).getByRole('cell')).toHaveText('50W. Long St.')
     await expect(page.getByRole('table').first().getByRole('row', { name: 'City' }).getByRole('cell')).toHaveText('Warsaw')
