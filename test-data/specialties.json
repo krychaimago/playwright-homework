@@ -1,0 +1,42 @@
+[
+    {
+        "id": 14636,
+        "name": "dentistry"
+    },
+    {
+        "id": 24635,
+        "name": "surgery"
+    },
+    {
+        "id": 34636,
+        "name": "reumatology"
+    },
+    {
+        "id": 44635,
+        "name": "intern"
+    },
+    {
+        "id": 54636,
+        "name": "surgery"
+    },
+    {
+        "id": 64635,
+        "name": "radiology"
+    },
+    {
+        "id": 74636,
+        "name": "neurology"
+    },
+    {
+        "id": 84635,
+        "name": "therapy"
+    },
+    {
+        "id": 94636,
+        "name": "laryngology"
+    },
+    {
+        "id": 40635,
+        "name": "dermatology"
+    }
+]
