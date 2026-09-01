@@ -1,0 +1,160 @@
+[
+    {
+        "firstName": "Przemek",
+        "lastName": "Kowalski",
+        "address": "50W. Long St.",
+        "city": "Warsaw",
+        "telephone": "884000884",
+        "id": 2211,
+        "pets": [
+            {
+                "name": "Julian",
+                "birthDate": "2018-07-20",
+                "type": {
+                    "name": "cat",
+                    "id": 2665
+                },
+                "id": 4199,
+                "ownerId": 2211,
+                "visits": [
+                    {
+                        "date": "2011-03-04",
+                        "description": "shot",
+                        "id": 15582,
+                        "petId": null
+                    },
+                    {
+                        "date": "2018-09-11",
+                        "description": "massage",
+                        "id": 25581,
+                        "petId": null
+                    },
+                    {
+                        "date": "2011-03-04",
+                        "description": "dermatology visit",
+                        "id": 35582,
+                        "petId": null
+                    },
+                    {
+                        "date": "2011-06-04",
+                        "description": "shot - second dose",
+                        "id": 45581,
+                        "petId": null
+                    },
+                    {
+                        "date": "2019-02-13",
+                        "description": "massage",
+                        "id": 55582,
+                        "petId": null
+                    },
+                    {
+                        "date": "2013-10-07",
+                        "description": "follow-up visit",
+                        "id": 65581,
+                        "petId": null
+                    },
+                    {
+                        "date": "2011-09-04",
+                        "description": "shor - third dose",
+                        "id": 75582,
+                        "petId": null
+                    },
+                    {
+                        "date": "2019-09-05",
+                        "description": "massage",
+                        "id": 85581,
+                        "petId": null
+                    },
+                    {
+                        "date": "2023-03-22",
+                        "description": "blood test",
+                        "id": 95582,
+                        "petId": null
+                    },
+                    {
+                        "date": "2025-04-18",
+                        "description": "follow-up visit",
+                        "id": 50581,
+                        "petId": null
+                    }
+                ]
+            },
+            {
+                "name": "Zorka",
+                "birthDate": "2020-09-02",
+                "type": {
+                    "name": "cat",
+                    "id": 2665
+                },
+                "id": 4200,
+                "ownerId": 2211,
+                "visits": []
+            }
+        ]
+    },
+    {
+        "firstName": "John",
+        "lastName": "Do",
+        "address": "10 Short Ave.",
+        "city": "Katowice",
+        "telephone": "123987321",
+        "id": 2212,
+        "pets": [
+            {
+                "name": "Max",
+                "birthDate": "2010-06-06",
+                "type": {
+                    "name": "dog",
+                    "id": 2666
+                },
+                "id": 4200,
+                "ownerId": 2212,
+                "visits": []
+            },
+            {
+                "name": "Twitty",
+                "birthDate": "2016-08-15",
+                "type": {
+                    "name": "bird",
+                    "id": 2669
+                },
+                "id": 4201,
+                "ownerId": 2212,
+                "visits": []
+            },
+            {
+                "name": "Alice",
+                "birthDate": "2022-04-10",
+                "type": {
+                    "name": "cat",
+                    "id": 2665
+                },
+                "id": 4202,
+                "ownerId": 2212,
+                "visits": []
+            },
+            {
+                "name": "Maya",
+                "birthDate": "2002-08-06",
+                "type": {
+                    "name": "cat",
+                    "id": 2665
+                },
+                "id": 4203,
+                "ownerId": 2212,
+                "visits": []
+            },
+            {
+                "name": "Jordan",
+                "birthDate": "2002-08-06",
+                "type": {
+                    "name": "snake",
+                    "id": 2668
+                },
+                "id": 4204,
+                "ownerId": 2212,
+                "visits": []
+            }
+        ]
+    }
+]
