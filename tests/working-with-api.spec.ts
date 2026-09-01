@@ -28,6 +28,5 @@ test('mocking API request', async ({ page }) => {
     await expect(page.locator('app-pet-list')).toHaveCount(2)
     const petName = page.locator('app-pet-list').locator('dt:has-text("Name") + dd')
     await expect(petName).toContainText(['Julian', 'Zorka'])
-    const petVisits = page.locator('app-visit-list').first().locator('tr:not(:has(th))')
-    await expect(petVisits).toHaveCount(10)
+    await expect(page.locator('app-visit-list table > tr')).toHaveCount(10)
 });
