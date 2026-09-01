@@ -44,5 +44,5 @@ test('mocking API request', async ({ page }) => {
 test('Intercept API response', async ({ page }) => {
     await page.getByRole('button', { name: 'Veterinarians' }).click()
     await page.getByRole('link', { name: 'All' }).click()
-    await expect(page.locator('#vets tbody tr', { hasText: 'Sharon Jenkins' }).locator('td div')).toHaveCount(10)
+    await expect(page.getByRole('row', { name: 'Sharon Jenkins' }).locator('td div')).toHaveCount(10)
 });
