@@ -21,19 +21,18 @@ test('Add and delete veterinarian', async ({ page, request }) => {
         data: { "firstName": "Julietta", "lastName": "Nova", "id": null, "specialties": [] }
     })
     expect(addNewVetResponse.status()).toEqual(201)
-    const responseJSON = await addNewVetResponse.json()
-    const vetId = responseJSON.id
-    expect(responseJSON.firstName).toEqual('Julietta')
+    const addNewVetResponseJSON = await addNewVetResponse.json()
+    const vetId = addNewVetResponseJSON.id
+    expect(addNewVetResponseJSON.firstName).toEqual('Julietta')
     await page.getByRole('button', { name: 'Veterinarians' }).click()
     await page.getByRole('link', { name: 'All' }).click()
     await expect(page.getByRole('cell', { name: 'Julietta Nova' })).toBeVisible()
     await expect(page.getByRole('row', { name: 'Julietta Nova' }).getByRole('cell').nth(1)).toBeEmpty()
     await page.getByRole('row', { name: 'Julietta Nova' }).getByRole('button', { name: 'Edit Vet' }).click()
-    await page.waitForResponse('**/api/vets/*')
     await page.locator('.form-group', { hasText: 'Specialties' }).locator('.dropdown').click()
     await page.getByRole('checkbox', { name: 'dentistry' }).check()
     await page.locator('.form-group', { hasText: 'Specialties' }).locator('.dropdown').click()
-    await page.locator('#vet_form').getByRole('button', { name: 'Save Vet' }).click()
+    await page.getByRole('button', { name: 'Save Vet' }).click()
     await expect(page.getByRole('row', { name: 'Julietta Nova' }).getByRole('cell').nth(1)).toHaveText('dentistry')
     const deleteVetResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/vets/${vetId}`)
     expect(deleteVetResponse.status()).toEqual(204)
@@ -49,19 +48,22 @@ test('New specialty is displayed', async ({ page, request }) => {
         data: { "name": "api testing ninja" }
     })
     expect(addingSpecialtyResponse.status()).toEqual(201)
-    const responseSpecialtyJSON = await addingSpecialtyResponse.json()
-    const specialtyId = responseSpecialtyJSON.id
+    const addNewSpecialtyResponseJSON = await addingSpecialtyResponse.json()
+    const specialtyId = addNewSpecialtyResponseJSON.id
+    const getSpecialtyResponse = await request.get('https://petclinic-api.bondaracademy.com/petclinic/api/specialties')
+    expect(getSpecialtyResponse.status()).toEqual(200)
+    const getSpecialtyResponseJSON: any[] = await getSpecialtyResponse.json()
+    const specialtySurgeryId = getSpecialtyResponseJSON.find(specialty => specialty.name === 'surgery').id
     const addNewVetResponse = await request.post('https://petclinic-api.bondaracademy.com/petclinic/api/vets', {
-        data: { "firstName": "Adam", "lastName": "Smith", "id": null, "specialties": [{ "id": 4635, "name": "surgery" }] }
+        data: { "firstName": "Adam", "lastName": "Smith", "id": null, "specialties": [{ "id": specialtySurgeryId, "name": "surgery" }] }
     })
     expect(addNewVetResponse.status()).toEqual(201)
-    const responseVetJSON = await addNewVetResponse.json()
-    const vetId = responseVetJSON.id
+    const addNewVetResponseJSON = await addNewVetResponse.json()
+    const vetId = addNewVetResponseJSON.id
     await page.getByRole('button', { name: 'Veterinarians' }).click()
     await page.getByRole('link', { name: 'All' }).click()
     await expect(page.getByRole('row', { name: 'Adam Smith' }).getByRole('cell').nth(1)).toHaveText('surgery')
     await page.getByRole('row', { name: 'Adam Smith' }).getByRole('button', { name: 'Edit Vet' }).click()
-    await page.waitForResponse('**/api/vets/*')
     await page.locator('.form-group', { hasText: 'Specialties' }).locator('.dropdown').click()
     await page.getByRole('checkbox', { name: 'surgery' }).uncheck()
     await page.getByRole('checkbox', { name: 'api testing ninja' }).check()
@@ -73,5 +75,6 @@ test('New specialty is displayed', async ({ page, request }) => {
     const deleteSpecialtyResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/specialties/${specialtyId}`)
     expect(deleteSpecialtyResponse.status()).toEqual(204)
     await page.getByRole('link', { name: 'Specialties' }).click()
+    await page.waitForResponse('**/specialties')
     await expect(page.locator('[name="spec_name"]', { hasText: 'api testing ninja' })).not.toBeVisible()
 })
