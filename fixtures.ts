@@ -1,7 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 
 type FixtureType = {
-    owner: void
+    owner: { ownerId: number, firstName: string, lastName: string, petId: number }
 }
 
 export const test = base.extend<FixtureType>({
@@ -13,6 +13,8 @@ export const test = base.extend<FixtureType>({
         expect(addNewOwnerResponse.status()).toEqual(201)
         const addNewOwnerResponseJSON = await addNewOwnerResponse.json()
         const ownerId = addNewOwnerResponseJSON.id
+        const firstName = addNewOwnerResponseJSON.firstName
+        const lastName = addNewOwnerResponseJSON.lastName
         const addNewPetResponse = await page.request.post(`https://petclinic-api.bondaracademy.com/petclinic/api/owners/${ownerId}/pets`, {
             data: { "id": null, "owner": { "firstName": "Alan", "lastName": "King", "address": "Doniecka", "city": "Katowice", "telephone": "884884884", "id": ownerId, "pets": [] }, "name": "Max", "birthDate": "2024-05-06", "pettype": "dog", "type": { "name": "dog", "id": 2666 } }
         })
@@ -23,7 +25,8 @@ export const test = base.extend<FixtureType>({
             data: { "date": "2026-08-11", "description": "dog therapy", "id": null, "pet": { "name": "Max", "birthDate": "2024-05-06", "type": { "name": "dog", "id": 2666 }, "id": petId, "ownerId": ownerId, "visits": [] } }
         })
         expect(addNewVisitResponse.status()).toEqual(201)
-        await use()
+        const owner = { ownerId, firstName, lastName, petId }
+        await use(owner)
         const deleteOwnerResponse = await page.request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/owners/${ownerId}`)
         expect(deleteOwnerResponse.status()).toEqual(204)
     }
