@@ -8,5 +8,5 @@ test('Test with fixture', async ({ page, owner }) => {
     await page.getByRole('button', { name: 'Delete Visit' }).click()
     await expect(page.locator('app-visit-list table > tr')).toHaveCount(0)
     await page.getByRole('button', { name: 'Delete Pet' }).click()
-    await expect(page.locator('app-pet-list table > tr', { hasText: 'Max' })).toHaveCount(0)
+    await expect(page.locator('app-pet-list table > tr', { hasText: owner.petName })).toHaveCount(0)
 })

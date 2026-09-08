@@ -1,7 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 
 type FixtureType = {
-    owner: { ownerId: number, firstName: string, lastName: string, petId: number }
+    owner: { ownerId: number, firstName: string, lastName: string, petId: number, petName: string }
 }
 
 export const test = base.extend<FixtureType>({
@@ -19,13 +19,14 @@ export const test = base.extend<FixtureType>({
             data: { "id": null, "owner": { "firstName": "Alan", "lastName": "King", "address": "Doniecka", "city": "Katowice", "telephone": "884884884", "id": ownerId, "pets": [] }, "name": "Max", "birthDate": "2024-05-06", "pettype": "dog", "type": { "name": "dog", "id": 2666 } }
         })
         expect(addNewPetResponse.status()).toEqual(201)
-        const getPetIdResponseJSON = await addNewPetResponse.json()
-        const petId = getPetIdResponseJSON.id
+        const getPetResponseJSON = await addNewPetResponse.json()
+        const petName = getPetResponseJSON.name
+        const petId = getPetResponseJSON.id
         const addNewVisitResponse = await page.request.post(`https://petclinic-api.bondaracademy.com/petclinic/api/owners/${ownerId}/pets/${petId}/visits`, {
-            data: { "date": "2026-08-11", "description": "dog therapy", "id": null, "pet": { "name": "Max", "birthDate": "2024-05-06", "type": { "name": "dog", "id": 2666 }, "id": petId, "ownerId": ownerId, "visits": [] } }
+            data: { "date": "2026-08-11", "description": "dog therapy", "id": null, "pet": { "name": petName, "birthDate": "2024-05-06", "type": { "name": "dog", "id": 2666 }, "id": petId, "ownerId": ownerId, "visits": [] } }
         })
         expect(addNewVisitResponse.status()).toEqual(201)
-        const owner = { ownerId, firstName, lastName, petId }
+        const owner = { ownerId, firstName, lastName, petId, petName }
         await use(owner)
         const deleteOwnerResponse = await page.request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/owners/${ownerId}`)
         expect(deleteOwnerResponse.status()).toEqual(204)
