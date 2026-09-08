@@ -1,6 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
+import 'dotenv/config';
 
-require('dotenv').config();
+declare const process: {
+  env: Record<string, string | undefined>;
+};
 
 export default defineConfig({
   fullyParallel: false,
